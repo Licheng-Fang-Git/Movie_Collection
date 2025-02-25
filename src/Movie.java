@@ -36,6 +36,11 @@ public class Movie {
         return title;
     }
 
+    public String getStringCast() {
+        return cast;
+
+    }
+
     public String[] getCast() {
         int countMembers = 0;
         for (int i = 0; i < cast.length(); i++) {
@@ -45,13 +50,6 @@ public class Movie {
         }
         String[] tempCast = new String[countMembers];
         tempCast = cast.split("\\|");
-//        ArrayList<String> castFull = new ArrayList<>();
-//
-//        for (int i = 0; i < tempCast.length; i++){
-//            if(!(castFull.contains(tempCast[i]))){
-//                castFull.add(tempCast[i]);
-//            }
-//        }
 
         return tempCast;
 

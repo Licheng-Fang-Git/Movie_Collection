@@ -201,7 +201,7 @@ public class MovieCollection
         System.out.println("Runtime: " + movie.getRuntime() + " minutes");
         System.out.println("Year: " + movie.getYear());
         System.out.println("Directed by: " + movie.getDirector());
-        System.out.println("Cast: " + movie.getCast());
+        System.out.println("Cast: " + movie.getStringCast());
         System.out.println("Overview: " + movie.getOverview());
         System.out.println("User rating: " + movie.getUserRating());
         System.out.println("Box office revenue: " + movie.getRevenue());
@@ -347,14 +347,14 @@ public class MovieCollection
         // now, display them all to the user
         for (int i = 0; i < results.size(); i++)
         {
-            String keyWord = results.get(i).getKeywords();
+            String title = results.get(i).getTitle();
 
 
             // this will print index 0 as choice 1 in the results list; better for user!
             int choiceNum = i + 1;
 
 
-            System.out.println("" + choiceNum + ". " + keyWord );
+            System.out.println("" + choiceNum + ". " + title );
         }
 
 
@@ -506,19 +506,20 @@ public class MovieCollection
     private void listHighestRevenue()
     {
         ArrayList<Movie> highestRevenue = new ArrayList<>();
-        double rating = 10;
-        while (highestRevenue.size() < 50){
-            for (int i = 0; i < movies.size(); i++){
-                if(!(highestRevenue.contains(movies.get(i)))) {
-                    if (movies.get(i).getRevenue() >= rating) {
-                        if (highestRevenue.size() < 50) {
-                            highestRevenue.add(movies.get(i));
-                        }
-                    }
+
+       // 2 3
+        for (int i = 0; i < movies.size(); i++) {
+            highestRevenue.add(movies.get(i));
+            for (int j = 0; j < highestRevenue.size(); j++){
+                if (movies.get(i).getRevenue() > movies.get(j).getRevenue()){
+                    highestRevenue.set(i, movies.get(j));
+                    highestRevenue.set(j, movies.get(i));
                 }
+
             }
-            rating -= 0.1;
         }
+        System.out.println(highestRevenue);
+
 
     }
 

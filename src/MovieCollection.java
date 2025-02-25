@@ -180,7 +180,6 @@ public class MovieCollection
             Movie temp = listToSort.get(j);
             String tempKeywords = temp.getKeywords();
 
-
             int possibleIndex = j;
             while (possibleIndex > 0 && tempKeywords.compareTo(listToSort.get(possibleIndex - 1).getKeywords()) < 0)
             {
@@ -190,8 +189,6 @@ public class MovieCollection
             listToSort.set(possibleIndex, temp);
         }
     }
-
-
 
     private void displayMovieInfo(Movie movie)
     {
@@ -365,12 +362,9 @@ public class MovieCollection
         int choice = scanner.nextInt();
         scanner.nextLine();
 
-
         Movie selectedMovie = results.get(choice - 1);
 
-
         displayMovieInfo(selectedMovie);
-
 
         System.out.println("\n ** Press Enter to Return to Main Menu **");
         scanner.nextLine();
@@ -406,7 +400,6 @@ public class MovieCollection
         System.out.println("Which movie would you like to learn more about?");
         System.out.print("Enter number: ");
 
-
         int choice = scanner.nextInt();
         scanner.nextLine();
 
@@ -434,13 +427,12 @@ public class MovieCollection
         // now, display them all to the user
         for (int i = 0; i < results.size(); i++)
         {
-            String keyWord = results.get(i).getTitle();
+            String title= results.get(i).getTitle();
 
             // this will print index 0 as choice 1 in the results list; better for user!
             int choiceNum = i + 1;
 
-
-            System.out.println("" + choiceNum + ". " + keyWord );
+            System.out.println("" + choiceNum + ". " + title );
         }
 
         System.out.println("Which movie would you like to learn more about?");
@@ -515,11 +507,34 @@ public class MovieCollection
                     highestRevenue.set(i, movies.get(j));
                     highestRevenue.set(j, movies.get(i));
                 }
-
             }
         }
-        System.out.println(highestRevenue);
 
+        for(int i = 0; i < 50; i++){
+
+            String title = highestRevenue.get(i).getTitle();
+            String revenue = String.valueOf(highestRevenue.get(i).getRevenue());
+
+
+            // this will print index 0 as choice 1 in the results list; better for user!
+            int choiceNum = i + 1;
+
+            System.out.println("" + choiceNum + ". " + title + ": $" + revenue );
+
+        }
+
+        System.out.println("Which movie would you like to learn more about?");
+        System.out.print("Enter number: ");
+
+        int number = scanner.nextInt();
+        scanner.nextLine();
+
+        Movie selectedMovie = highestRevenue.get(number - 1);
+
+        displayMovieInfo(selectedMovie);
+
+        System.out.println("\n ** Press Enter to Return to Main Menu **");
+        scanner.nextLine();
 
     }
 

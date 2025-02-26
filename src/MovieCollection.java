@@ -381,7 +381,6 @@ public class MovieCollection
                 }
             }
         }
-
         System.out.println(allGenres);
 
         for (int i = 0; i < allGenres.size(); i++)
@@ -395,7 +394,6 @@ public class MovieCollection
 
             System.out.println("" + choiceNum + ". " + keyWord );
         }
-
 
         System.out.println("Which movie would you like to learn more about?");
         System.out.print("Enter number: ");

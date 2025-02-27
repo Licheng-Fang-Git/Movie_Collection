@@ -103,6 +103,7 @@ public class MovieDatabaseBuilder {
                     if (s.contains(movies.get(i))){
                         continue;
                     }
+                    // contains the actor in another movie
                     if (movies.get(i).getActors().get(0).contains(actor)){
                         for (String linkup : allActors) {
 

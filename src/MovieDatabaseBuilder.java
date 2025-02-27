@@ -69,18 +69,20 @@ public class MovieDatabaseBuilder {
         Set<SimpleMovie> s = new HashSet<>();
 
         int number  = 0;
+        ArrayList<String> allActors = new ArrayList<>();
 
         for (int i = 0; i < movies.size(); i++) {
             if (movies.get(i).getActors().get(0).contains(searchName)) {
                 link.add(movies.get(i));
                 dq.add(movies.get(i));
+                allActors.add(" " + searchName);
             }
             i = movies.size();
         }
-        boolean linkUp = false;
+
 
         while (!dq.isEmpty()){
-            linkUp = false;
+
             SimpleMovie checkMovie = dq.pop();
             if (s.contains(checkMovie)){
                 continue;
@@ -102,17 +104,18 @@ public class MovieDatabaseBuilder {
                         continue;
                     }
                     if (movies.get(i).getActors().get(0).contains(actor)){
+                        for (String linkup : allActors) {
 
-                        System.out.println("true");
-                        System.out.println(actor);
-                        System.out.println(movies.get(i));
-                        link.add(movies.get(i));
-                        dq.add(movies.get(i));
+                            System.out.println("true");
+                            System.out.println(actor);
+                            System.out.println(movies.get(i));
+                            allActors.add(actor);
+                            link.add(movies.get(i));
+                            dq.add(movies.get(i));
+                        }
                     }
                 }
             }
-
-
 
         }
 

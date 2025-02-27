@@ -70,13 +70,12 @@ public class MovieDatabaseBuilder {
         Set<SimpleMovie> s = new HashSet<>();
 
         int number  = 0;
-        ArrayList<String> allActors = new ArrayList<>();
 
         for (int i = 0; i < movies.size(); i++) {
             if (movies.get(i).getActors().get(0).contains(searchName)) {
                 specificActor.add(movies.get(i));
                 dq.add(movies.get(i));
-                allActors.add(" " + searchName);
+
             }
         }
         // all movies with search
@@ -111,8 +110,6 @@ public class MovieDatabaseBuilder {
                         System.out.println("true");
                         System.out.println(actor);
                         System.out.println(movies.get(i));
-
-                        allActors.add(actor);
                         link.add(movies.get(i));
                     }
                 }

@@ -66,6 +66,7 @@ public class MovieDatabaseBuilder {
         String searchName = search;
 
         ArrayList<SimpleMovie> link = new ArrayList<>();
+        ArrayList<SimpleMovie> specificActor = new ArrayList<>();
         Set<SimpleMovie> s = new HashSet<>();
 
         int number  = 0;
@@ -73,13 +74,13 @@ public class MovieDatabaseBuilder {
 
         for (int i = 0; i < movies.size(); i++) {
             if (movies.get(i).getActors().get(0).contains(searchName)) {
-                link.add(movies.get(i));
+                specificActor.add(movies.get(i));
                 dq.add(movies.get(i));
                 allActors.add(" " + searchName);
             }
-            i = movies.size();
         }
-
+        // all movies with search
+        System.out.println(specificActor);
 
         while (!dq.isEmpty()){
 
@@ -87,36 +88,36 @@ public class MovieDatabaseBuilder {
             if (s.contains(checkMovie)){
                 continue;
             }
+
             s.add(checkMovie);
-            String[] actors = checkMovie.getActors().get(0).split(",");
+            String[] actors = checkMovie.getActors().get(0).split(", ");
 
             for (String actor : actors){
-                if(actor.equals(" Kevin Bacon") || actor.equals(" Kevin Bacon]") || actor.equals(" [Kevin Bacon")  ){
+
+                if(actor.equals("Kevin Bacon") || actor.equals("Kevin Bacon]") || actor.equals(" [Kevin Bacon")  ){
                     continue;
                 }
 
-                if(actor.equals(" " + searchName)){
+                if(actor.equals(searchName)){
                     continue;
                 }
 
-                for (int i = 0; i < movies.size(); i++){
-                    if (s.contains(movies.get(i))){
+                for (int i = 0; i < specificActor.size(); i++){
+                    if (s.contains(specificActor.get(i))){
                         continue;
                     }
-                    // contains the actor in another movie
-                    if (movies.get(i).getActors().get(0).contains(actor)){
-                        for (String linkup : allActors) {
 
-                            System.out.println("true");
-                            System.out.println(actor);
-                            System.out.println(movies.get(i));
-                            allActors.add(actor);
-                            link.add(movies.get(i));
-                            dq.add(movies.get(i));
-                        }
+                    if (specificActor.get(i).getActors().get(0).contains(actor)) {
+                        System.out.println("true");
+                        System.out.println(actor);
+                        System.out.println(movies.get(i));
+
+                        allActors.add(actor);
+                        link.add(movies.get(i));
                     }
                 }
             }
+            System.out.println(link);
 
         }
 

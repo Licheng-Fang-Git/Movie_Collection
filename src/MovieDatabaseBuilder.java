@@ -1,6 +1,8 @@
 import javax.swing.plaf.IconUIResource;
 import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 
@@ -35,41 +37,83 @@ public class MovieDatabaseBuilder {
         return movies;
     }
 
+    public void kevinBaconFile(ArrayList<SimpleMovie> movies){
+        ArrayList<SimpleMovie> kevinBaconMovie = new ArrayList<SimpleMovie>();
+
+        try {
+            File f = new File("src/output.txt");
+            f.createNewFile();
+            FileWriter fw = new FileWriter(f);
+
+            for (SimpleMovie n : movies) {
+                if (n.getActors().contains("Kevin Bacon")) {
+                    fw.write(n.getTitle() + "--- " + n.getActors() + "\n" );
+                }
+            }
+            fw.close();
+        }
+        catch (IOException ioe) {
+            System.out.println("Writing file failed");
+            System.out.println(ioe);
+        }
+
+    }
+
     public ArrayList<SimpleMovie> menu(String search, int count){
         Deque<SimpleMovie> dq = new ArrayDeque<SimpleMovie>();
-        ArrayList<SimpleMovie> movies = MovieDatabaseBuilder.getMovieDB("src/movie_data");
+        ArrayList<SimpleMovie> movies = MovieDatabaseBuilder.getMovieDB("src/output.txt");
 
         String searchName = search;
 
         ArrayList<SimpleMovie> link = new ArrayList<>();
         Set<SimpleMovie> s = new HashSet<>();
-        String kevin = "Kevin Bacon";
+
         int number  = 0;
 
         for (int i = 0; i < movies.size(); i++) {
-            if (movies.get(i).getActors().contains(kevin)) {
-                s.add(movies.get(i));
-                dq.add(movies.get(i));
+            if (movies.get(i).getActors().get(0).contains(searchName)) {
                 link.add(movies.get(i));
-                i = movies.size();
+                dq.add(movies.get(i));
             }
+            i = movies.size();
         }
+        boolean linkUp = false;
 
-        while (!dq.isEmpty() && number <= count){
+        while (!dq.isEmpty()){
+            linkUp = false;
             SimpleMovie checkMovie = dq.pop();
             if (s.contains(checkMovie)){
                 continue;
             }
             s.add(checkMovie);
-            for (int i = 0; i < movies.size(); i++) {
-                if (checkMovie.getActors().contains(kevin) && checkMovie.getActors().contains(searchName)){
-                    link.add(checkMovie);
-                    dq.add(checkMovie);
+            String[] actors = checkMovie.getActors().get(0).split(",");
+
+            for (String actor : actors){
+                if(actor.equals(" Kevin Bacon") || actor.equals(" Kevin Bacon]") || actor.equals(" [Kevin Bacon")  ){
+                    continue;
+                }
+
+                if(actor.equals(" " + searchName)){
+                    continue;
+                }
+
+                for (int i = 0; i < movies.size(); i++){
+                    if (s.contains(movies.get(i))){
+                        continue;
+                    }
+                    if (movies.get(i).getActors().get(0).contains(actor)){
+
+                        System.out.println("true");
+                        System.out.println(actor);
+                        System.out.println(movies.get(i));
+                        link.add(movies.get(i));
+                        dq.add(movies.get(i));
+                    }
                 }
             }
 
 
-            number += 1;
+
         }
 
         return link;

@@ -6,6 +6,7 @@ public class DataBaseRunner {
 
         ArrayList<SimpleMovie> movies = MovieDatabaseBuilder.getMovieDB("src/movie_data");
         MovieDatabaseBuilder m = new MovieDatabaseBuilder();
+        m.kevinBaconFile(movies);
         Scanner s = new Scanner(System.in);
 
         System.out.println("Which person do you want to link Kevin Bacon to?");
@@ -16,10 +17,10 @@ public class DataBaseRunner {
         ArrayList<SimpleMovie> linking = m.menu(name, count);
         s.close();
 
-        for (SimpleMovie movie : linking) {
-            System.out.print(name + "--->");
-            System.out.println(movie.getTitle() + ": Actors " + movie.getActors());
-        }
+//        for (SimpleMovie movie : linking) {
+//            System.out.print(name + "--->");
+//            System.out.println(movie.getTitle());
+//        }
         System.out.println("Number of movies: " + movies.size() );
     }
 }

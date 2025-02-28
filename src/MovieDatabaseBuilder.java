@@ -59,7 +59,8 @@ public class MovieDatabaseBuilder {
 
     public ArrayList<SimpleMovie> menu(String search, int count) {
         Deque<SimpleMovie> dq = new ArrayDeque<SimpleMovie>();
-        ArrayList<SimpleMovie> movies = MovieDatabaseBuilder.getMovieDB("src/output.txt");
+        ArrayList<SimpleMovie> movies = MovieDatabaseBuilder.getMovieDB("src/movie_data");
+        ArrayList<SimpleMovie> kevinMovies = MovieDatabaseBuilder.getMovieDB("src/output.txt");
 
         String searchName = search;
 
@@ -75,6 +76,7 @@ public class MovieDatabaseBuilder {
             }
         }
         getActors.add(searchName);
+
         while (!dq.isEmpty()) {
             SimpleMovie checkMovie = dq.pop();
             if (s.contains(checkMovie)) {
@@ -82,8 +84,9 @@ public class MovieDatabaseBuilder {
             }
             s.add(checkMovie);
 
-            String[] actors = checkMovie.getActors().get(0).split(", ");
+            ArrayList<String> actors =  checkMovie.getActors();
 
+            System.out.println(actors);
             for (String actor : actors) {
 
                 if (actor.contains("Kevin Bacon")) {
@@ -103,16 +106,19 @@ public class MovieDatabaseBuilder {
                     actor = actor.substring(0,bracket);
                 }
 
-                for (int i = 0; i < specificActor.size(); i++) {
-                    if (s.contains(specificActor.get(i))) {
+                for (int i = 0; i < kevinMovies.size(); i++) {
+                    if (s.contains(kevinMovies.get(i))) {
                         continue;
                     }
 
-                    if (specificActor.get(i).getActors().get(0).contains(actor)) {
+                    if (kevinMovies.get(i).getActors().get(0).contains(actor)) {
+                        System.out.println(actor);
+                        System.out.println(kevinMovies);
+                        System.out.println(kevinMovies.get(i));
                         getActors.add(actor);
                         link.add(checkMovie);
-                        link.add(specificActor.get(i));
-                        s.add(specificActor.get(i));
+                        link.add(kevinMovies.get(i));
+                        s.add(kevinMovies.get(i));
                     }
                 }
             }
@@ -133,7 +139,7 @@ public class MovieDatabaseBuilder {
     }
 
     public String mostAppear(){
-        ArrayList<SimpleMovie> movies = MovieDatabaseBuilder.getMovieDB("src/output.txt");
+        ArrayList<SimpleMovie> movies = MovieDatabaseBuilder.getMovieDB("src/movie_data");
         int max = 0;
         int count = 0;
         String actor = "";
@@ -147,8 +153,10 @@ public class MovieDatabaseBuilder {
                 if(actored.contains("Kyra Sedgwick")){
                     continue;
                 }
-
                 if(actored.contains("Oliver Platt")){
+                    continue;
+                }
+                if(actored.contains("Jr.")){
                     continue;
                 }
 

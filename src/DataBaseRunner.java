@@ -9,8 +9,6 @@ public class DataBaseRunner {
         m.kevinBaconFile(movies);
         Scanner s = new Scanner(System.in);
 
-        m.mostAppear();
-
         System.out.println("Which person do you want to link Kevin Bacon to?");
         System.out.print("Enter name: ");
         String name = s.nextLine();

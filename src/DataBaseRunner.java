@@ -9,18 +9,23 @@ public class DataBaseRunner {
         m.kevinBaconFile(movies);
         Scanner s = new Scanner(System.in);
 
+        m.mostAppear();
+
         System.out.println("Which person do you want to link Kevin Bacon to?");
         System.out.print("Enter name: ");
         String name = s.nextLine();
         System.out.print("Enter a number: ");
         int count  = Integer.parseInt(s.nextLine());
         ArrayList<SimpleMovie> linking = m.menu(name, count);
+        ArrayList<String> actors = m.getGetActors();
         s.close();
 
-//        for (SimpleMovie movie : linking) {
-//            System.out.print(name + "--->");
-//            System.out.println(movie.getTitle());
-//        }
-        System.out.println("Number of movies: " + movies.size() );
+        for(int i = 0; i < linking.size(); i++){
+            System.out.print(actors.get(i) + " --> ");
+            System.out.print(linking.get(i).getTitle() + " --> ");
+        }
+        System.out.println(actors.getLast());
+        System.out.println("Bacon number of " + linking.size());
+
     }
 }

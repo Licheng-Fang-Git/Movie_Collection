@@ -4,6 +4,7 @@ public class SimpleMovie {
     private String title;
     private String actorsData;
     private ArrayList<String> actors;
+    private String actor;
 
     public SimpleMovie(String t, String a) {
         title = t;

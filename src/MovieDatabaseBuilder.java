@@ -86,7 +86,6 @@ public class MovieDatabaseBuilder {
 
             ArrayList<String> actors =  checkMovie.getActors();
 
-            System.out.println(actors);
             for (String actor : actors) {
 
                 if (actor.contains("Kevin Bacon")) {
@@ -94,6 +93,10 @@ public class MovieDatabaseBuilder {
                 }
 
                 if (actor.contains(search)) {
+                    continue;
+                }
+
+                if (getActors.contains(actor)) {
                     continue;
                 }
 
@@ -112,13 +115,28 @@ public class MovieDatabaseBuilder {
                     }
 
                     if (kevinMovies.get(i).getActors().get(0).contains(actor)) {
-                        System.out.println(actor);
-                        System.out.println(kevinMovies);
-                        System.out.println(kevinMovies.get(i));
-                        getActors.add(actor);
+//                        System.out.println(actor);
+//                        System.out.println(kevinMovies);
+//                        System.out.println(kevinMovies.get(i));
                         link.add(checkMovie);
+                        getActors.add(actor);
                         link.add(kevinMovies.get(i));
                         s.add(kevinMovies.get(i));
+                    }
+
+                    else{
+                        for(int j = 0; j < movies.size(); j++){
+                            if (s.contains(movies.get(i))){
+                                continue;
+                            }
+                            if (!(getActors.contains(actor))) {
+                                if (movies.get(i).getActors().get(0).contains(actor)) {
+                                    dq.add(movies.get(i));
+                                    link.add(movies.get(i));
+                                    s.add(movies.get(i));
+                                }
+                            }
+                        }
                     }
                 }
             }

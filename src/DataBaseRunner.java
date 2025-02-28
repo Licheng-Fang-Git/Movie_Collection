@@ -17,7 +17,8 @@ public class DataBaseRunner {
         ArrayList<SimpleMovie> linking = m.menu(name, count);
         ArrayList<String> actors = m.getGetActors();
         s.close();
-
+        System.out.println(linking);
+        System.out.println(actors);
         for(int i = 0; i < linking.size(); i++){
             System.out.print(actors.get(i) + " --> ");
             System.out.print(linking.get(i).getTitle() + " --> ");

@@ -58,7 +58,7 @@ public class MovieDatabaseBuilder {
     }
 
     public ArrayList<SimpleMovie> menu(String search, int count) {
-        Deque<SimpleMovie> dq = new ArrayDeque<SimpleMovie>();
+        Deque<SimpleMovie> dq = new LinkedList<>();
         ArrayList<SimpleMovie> movies = MovieDatabaseBuilder.getMovieDB("src/movie_data");
         ArrayList<SimpleMovie> kevinMovies = MovieDatabaseBuilder.getMovieDB("src/output.txt");
 
@@ -77,17 +77,16 @@ public class MovieDatabaseBuilder {
         }
         getActors.add(searchName);
 
-        for (int i  = 0; i < specificActor.size(); i++){
-            if(specificActor.get(i).getActors().contains("Kevin Bacon")){
+        for (int i  = 0; i < specificActor.size(); i++) {
+            if (specificActor.get(i).getActors().contains("Kevin Bacon")) {
                 link.add(specificActor.get(i));
                 getActors.add("Kevin Bacon");
                 return link;
             }
         }
 
-
         while (!dq.isEmpty()) {
-            SimpleMovie checkMovie = dq.pop();
+            SimpleMovie checkMovie = dq.pollFirst();
 
             if (s.contains(checkMovie)) {
                 continue;
@@ -103,46 +102,27 @@ public class MovieDatabaseBuilder {
 
             ArrayList<String> actors = checkMovie.getActors();
 
-            for (String actor : actors) {
-                if (actor.equals(search)) {
-                    continue;
-                }
+            SimpleMovie other = actorInOtherMoive(movies, s, actors, search);
 
-                if (getActors.contains(actor)) {
-                    continue;
-                }
+            if (s.contains(other)) {
+                continue;
+            }
 
-                if (actor.contains("[")) {
-                    int bracket = actor.indexOf("[");
-                    actor = actor.substring(bracket + 1);
-                }
-                if (actor.contains("]")) {
-                    int bracket = actor.indexOf("]");
-                    actor = actor.substring(0, bracket);
-                }
-
-                SimpleMovie other = actorInOtherMoive(movies, s, actor, search);
-                System.out.println("Checking movie");
-                System.out.println(checkMovie);
-                System.out.println("Checking actor");
-                System.out.println(actor);
-                System.out.println(other);
-                if(s.contains(other)){
-                    continue;
-                }
-                s.add(other);
-                if(!(other == null)){
-                    getActors.add(actor);
-                    link.add(other);
-                    s.add(other);
+            if (!(other == null)) {
+                if(other.getActors().contains("Kevin Bacon")) {
+                    link.add(checkMovie);
                     dq.addFirst(other);
 
                 }
+                else{
+                    dq.addLast(other);
+                }
+
+
             }
         }
 
         getActors.add("Kevin Bacon");
-
         return link;
     }
 
@@ -150,23 +130,66 @@ public class MovieDatabaseBuilder {
         return getActors;
     }
 
-    public SimpleMovie actorInOtherMoive(ArrayList<SimpleMovie> movies, HashSet<SimpleMovie> s, String actor, String search){
+    public SimpleMovie actorInOtherMoive(ArrayList<SimpleMovie> movies, HashSet<SimpleMovie> s, ArrayList<String> actors, String search){
         ArrayList<SimpleMovie> moreThanOne =  new ArrayList<>();
-        for(int i = 0; i < movies.size(); i++){
-            if (s.contains(movies.get(i))){
+        for (String actor : actors) {
+            if (actor.equals(search)) {
+                continue;
+            }
+            if (getActors.contains(actor)) {
                 continue;
             }
 
-            if(movies.get(i).getActors().contains(actor) && movies.get(i).getActors().contains("Kevin Bacon")){
-                return movies.get(i);
+            if (actor.contains("[")) {
+                int bracket = actor.indexOf("[");
+                actor = actor.substring(bracket + 1);
+            }
+            if (actor.contains("]")) {
+                int bracket = actor.indexOf("]");
+                actor = actor.substring(0, bracket);
             }
 
-            if(movies.get(i).getActors().contains(actor)){
-                return movies.get(i);
+            for (int i = 0; i < movies.size(); i++) {
+                if (s.contains(movies.get(i))) {
+                    continue;
+                }
+                if (movies.get(i).getActors().contains(actor) && movies.get(i).getActors().contains("Kevin Bacon")) {
+                    getActors.add(actor);
+                    return movies.get(i);
+                }
             }
         }
-        return null;
 
+        for (String actor : actors) {
+            if (actor.equals(search)) {
+                continue;
+            }
+
+            if (getActors.contains(actor)) {
+                continue;
+            }
+
+            if (actor.contains("[")) {
+                int bracket = actor.indexOf("[");
+                actor = actor.substring(bracket + 1);
+            }
+            if (actor.contains("]")) {
+                int bracket = actor.indexOf("]");
+                actor = actor.substring(0, bracket);
+            }
+
+            for (int i = 0; i < movies.size(); i++) {
+                if (s.contains(movies.get(i))) {
+                    continue;
+                }
+                if (movies.get(i).getActors().contains(actor)) {
+                    getActors.add(actor);
+                    return movies.get(i);
+                }
+            }
+        }
+
+        return null;
     }
 
 
